@@ -1,0 +1,148 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Assignment3
+{
+    internal class Employee
+    {
+
+        private int empno { get; set; }
+        private string empname { get; set; }
+        protected double salary { get; set; }
+        protected double HRA { get; set; }
+        protected double TA { get; set; }
+        protected double DA { get; set; }
+        protected double PF { get; set; }
+        protected double TDS { get; set; }
+        protected double netsalary { get; set; }
+        protected double Grosssalary { get; set; }
+        public Employee(int EmpNo, string EmpName, double Salary)
+        {
+            empno = EmpNo;
+            empname = EmpName;
+            salary = Salary;
+            if (salary < 5000)
+            {
+                HRA = salary * 10 / 100;
+                TA = salary * 5 / 100;
+                DA = salary * 15 / 100;
+                Grosssalary = salary + HRA + TA + DA;
+            }
+            else if (salary < 10000)
+            {
+                HRA = salary * 15 / 100;
+                TA = salary * 10 / 100;
+                DA = salary * 20 / 100;
+                Grosssalary = salary + HRA + TA + DA;
+            }
+            else if (salary < 15000)
+            {
+                HRA = salary * 20 / 100;
+                TA = salary * 15 / 100;
+                DA = salary * 25 / 100;
+                Grosssalary = salary + HRA + TA + DA;
+            }
+            else if (salary < 20000)
+            {
+                HRA = salary * 25 / 100;
+                TA = salary * 20 / 100;
+                DA = salary * 30 / 100;
+                Grosssalary = salary + HRA + TA + DA;
+            }
+            else
+            {
+                HRA = salary * 30 / 100;
+                TA = salary * 25 / 100;
+                DA = salary * 35 / 100;
+                Grosssalary = salary + HRA + TA + DA;
+            }
+        }
+        public virtual void CalculateSalary()
+
+        {
+            PF = Grosssalary * 10 / 100;
+            TDS = Grosssalary * 10 / 100;
+            netsalary = Grosssalary * 10 / 100;
+            Console.WriteLine("net salary is" + netsalary);
+        }
+        public virtual void Gsal()
+        {
+            Console.WriteLine(Grosssalary);
+        }
+    }
+
+
+    class Manager : Employee
+    {
+        private double petrolallowance { get; set; }
+        private double Foodallowance { get; set; }
+        private double otherallowance { get; set; }
+        public Manager(int empno, string empname, double salary) : base(empno, empname, salary)
+        {
+            petrolallowance = salary * 8 / 100;
+            Foodallowance = salary * 10 / 100;
+            otherallowance = salary * 3 / 100;
+        }
+        public override void Gsal()
+        {
+
+            Grosssalary = Grosssalary + petrolallowance + Foodallowance + otherallowance;
+            Console.WriteLine(Grosssalary);
+        }
+        public override void CalculateSalary()
+        {
+
+            netsalary = Grosssalary - (PF + TDS);
+        }
+
+    }
+    class MarketingExecutive : Employee
+    {
+        private double kilometertravel { get; set; }
+        private double tourallowance { get; set; }
+        private double telephoneallowance { get; set; }
+        public MarketingExecutive(int empno, string empname, double salary, double kit) : base(empno, empname, salary)
+        {
+            kilometertravel = kit;
+            tourallowance = kilometertravel * 8;
+            telephoneallowance = 2000;
+        }
+        public override void Gsal()
+        {
+            Console.WriteLine("MarketingExecutive Grosssalary");
+            Grosssalary = Grosssalary + tourallowance + telephoneallowance;
+            Console.WriteLine(Grosssalary);
+        }
+        public override void CalculateSalary()
+        {
+            Console.WriteLine("MarketingExecutive netsalary");
+            netsalary = Grosssalary - (PF + TDS);
+            Console.WriteLine(netsalary);
+        }
+
+    }
+    class Mainprogram
+    {
+        public static void Main(string[] args)
+        {
+             Manager M1 = new Manager(01, "john", 10000);
+             M1.Gsal();
+            MarketingExecutive MarkE1 = new MarketingExecutive(10, "geeta", 20000, 9);
+
+             MarkE1.Gsal();
+            Console.ReadLine();
+        }
+    }
+}
+
+
+
+
+    
+
+
+
+
